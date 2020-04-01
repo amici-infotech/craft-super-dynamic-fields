@@ -5,11 +5,17 @@ use Craft;
 use yii\base\Event;
 use craft\base\Plugin;
 use craft\events\RegisterUrlRulesEvent;
+use craft\events\RegisterComponentTypesEvent;
+use craft\services\Fields;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\UrlManager;
 
 use amici\SuperDynamicFields\base\PluginTrait;
 use amici\SuperDynamicFields\models\Settings;
+use amici\SuperDynamicFields\fields\SueprDynamicDropdownField;
+/*use amici\SuperDynamicFields\fields\SueprDynamicCheckboxesField;
+use amici\SuperDynamicFields\fields\SueprDynamicRadioField;
+use amici\SuperDynamicFields\fields\SueprDynamicMultiSelectField;*/
 
 class SuperDynamicFields extends Plugin
 {
@@ -31,8 +37,19 @@ class SuperDynamicFields extends Plugin
 
 	    self::$plugin = $this;
 	    // self::$app = new App();
+	    $this->_registerFields();
 	    $this->_setPluginComponents();
 
+	}
+
+	private function _registerFields()
+	{
+		Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
+			$event->types[] = SueprDynamicDropdownField::class;
+			/*$event->types[] = SueprDynamicCheckboxesField::class;
+			$event->types[] = SueprDynamicRadioField::class;
+			$event->types[] = SueprDynamicMultiSelectField::class;*/
+		});
 	}
 
 	protected function createSettingsModel(): Settings
