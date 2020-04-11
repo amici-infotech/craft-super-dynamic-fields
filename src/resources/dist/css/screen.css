@@ -1,0 +1,7 @@
+.sdf-al-box {padding: 10px !important; line-height: 1.2;}
+.sdf-al-box .icon.minus:before {content: 'minus'; }
+.sdf-al-box .icon.alert:before {content: 'alert'; color: #EF4E4E; margin-right: 2px; margin-top: -1px;}
+.sdf-al-box .expand-code {float: right; font-size: 1.2em;}
+.sdf-al-box .sdf-error-message {display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;}
+.sdf-al-box .code {padding-top: 20px; line-height: 1.5;}
+.sdf-al-box .code pre {tab-size: 2; -moz-tab-size: 2; }

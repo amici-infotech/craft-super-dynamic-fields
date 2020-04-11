@@ -1,1 +1,25 @@
 {% import '_includes/forms' as forms %}
+
+{% macro errorList(errors) %}
+    {% if errors %}
+        <ul class="errors">
+            {% for categorizedErrors in errors %}
+                {% for error in categorizedErrors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+{% from _self import errorList %}
+
+{{ forms.autosuggestField({
+    label: "JSON Template"|t('super-dynamic-fields'),
+    instructions: "The template Craft CMS will use to get options"|t('super-dynamic-fields'),
+    id: 'template',
+    name: 'template',
+    suggestions: craft.cp.getTemplateSuggestions(),
+    required: true,
+    value: settings.template,
+    errors: (settings is defined ? settings.getErrors('template') : null),
+}) }}
