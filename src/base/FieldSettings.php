@@ -47,8 +47,30 @@ trait FieldSettings
 
     public function serializeValue($value, ElementInterface $element = null)
     {
-        $value = isset($value->value) ? $value->value : "";
+
+        if($this->multi)
+        {
+            if(is_array($value))
+            {
+                $temp = $value;
+                $value = [];
+                foreach ($temp as $key => $val)
+                {
+                    $value[] = $val->value;
+                }
+            }
+            else
+            {
+                $value = null;
+            }
+        }
+        else
+        {
+            $value = isset($value->value) ? $value->value : "";
+        }
+
         return parent::serializeValue($value, $element);
+
     }
 
     public function getInputHtml($value, ElementInterface $element = null): string
@@ -73,7 +95,17 @@ trait FieldSettings
             {
                 if(isset($val['value']) && isset($val['label']))
                 {
-                    $options[$val['value']] = $val['label'];
+                    if($this->multi)
+                    {
+                        $options[] = [
+                            'value' => $val['value'],
+                            'label' => $val['label'],
+                        ];
+                    }
+                    else
+                    {
+                        $options[$val['value']] = $val['label'];
+                    }
                 }
             }
         }
@@ -90,7 +122,7 @@ trait FieldSettings
 
     }
 
-    protected function parseSingle($value, ElementInterface $element = null)
+    public function normalizeValue($value, ElementInterface $element = null)
     {
 
         if($value instanceof DynamicField)
@@ -102,12 +134,26 @@ trait FieldSettings
 
             return $value;
         }
-        elseif($value == "")
+        elseif($value == "" && ! $this->isFresh($element))
         {
             return null;
         }
 
         $this->json = $this->_parseTemplateJson();
+
+        if($this->multi)
+        {
+            return $this->_parseMulti($value, $element);
+        }
+        else
+        {
+            return $this->_parseSingle($value, $element);
+        }
+
+    }
+
+    private function _parseSingle($value, ElementInterface $element = null)
+    {
 
         $currentVal = new DynamicField();
         $currentVal->value = $value;
@@ -118,15 +164,17 @@ trait FieldSettings
             foreach ($this->json as $key => $val)
             {
 
-                if($val['value'] == $value)
+                if($this->isFresh($element) && isset($val['default']) && in_array(strtolower($val['default']), [true, 'true', 'yes', 'y']))
+                {
+                    $currentVal->value = $val['value'];
+                }
+                elseif($val['value'] == $value)
                 {
 
-                    $temp  = $val;
-
-                    $currentVal->value   = $temp['value'];
-                    $currentVal->label   = $temp['label'];
-                    $currentVal->default = ((isset($temp['default']) && in_array(strtolower($temp['default']), ['true', 'yes', 'y'])) ? true : false);
-                    $currentVal->extras  = $temp;
+                    $currentVal->value   = $val['value'];
+                    $currentVal->label   = $val['label'];
+                    $currentVal->default = ((isset($val['default']) && in_array(strtolower($val['default']), [true, 'true', 'yes', 'y'])) ? true : false);
+                    $currentVal->extras  = $val;
 
                     unset($currentVal->extras['value']);
                     unset($currentVal->extras['label']);
@@ -139,6 +187,58 @@ trait FieldSettings
         }
 
         return $currentVal;
+
+    }
+
+    private function _parseMulti($value, ElementInterface $element = null)
+    {
+
+        if (! is_array($value))
+        {
+            $value = @json_decode($value, true);
+        }
+
+        if (! is_array($value))
+        {
+            $value = [];
+        }
+
+        $return = [];
+        $cnt = 0;
+        if (is_array($this->json))
+        {
+
+            foreach ($this->json as $key => $val)
+            {
+
+                if($this->isFresh($element) && isset($val['default']) && in_array(strtolower($val['default']), [true, 'true', 'yes', 'y']))
+                {
+                    $return[$cnt] = new DynamicField();
+                    $return[$cnt]->value = $val['value'];
+                    $cnt++;
+                }
+                elseif(in_array($val['value'], $value))
+                {
+
+                    $return[$cnt] = new DynamicField();
+
+                    $return[$cnt]->value   = $val['value'];
+                    $return[$cnt]->label   = $val['label'];
+                    $return[$cnt]->default = ((isset($val['default']) && in_array(strtolower($val['default']), [true, 'true', 'yes', 'y'])) ? true : false);
+                    $return[$cnt]->extras  = $val;
+
+                    unset($return[$cnt]->extras['value']);
+                    unset($return[$cnt]->extras['label']);
+                    unset($return[$cnt]->extras['default']);
+                    $cnt++;
+
+                }
+
+            }
+
+        }
+
+        return $return;
 
     }
 

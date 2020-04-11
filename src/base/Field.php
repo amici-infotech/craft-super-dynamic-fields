@@ -31,7 +31,7 @@ abstract class Field extends SavableComponent
 
     public function getDefault(): bool
     {
-        return (in_array(strtolower($this->default), ['true', 'yes', 'y'])) ? true : false;
+        return (in_array(strtolower($this->default), [true, 'true', 'yes', 'y'])) ? true : false;
     }
 
     public function getExtras()

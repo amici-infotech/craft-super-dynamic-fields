@@ -3,12 +3,13 @@ namespace amici\SuperDynamicFields\fields;
 
 use Craft;
 
-use craft\base\Field;
+// use craft\base\Field;
+use craft\fields\BaseOptionsField;
 use craft\base\PreviewableFieldInterface;
 
 use amici\SuperDynamicFields\base\FieldSettings;
 
-class SueprDynamicDropdownField extends Field implements PreviewableFieldInterface
+class SueprDynamicCheckboxesField extends BaseOptionsField implements PreviewableFieldInterface
 {
 
     use FieldSettings;
@@ -17,12 +18,18 @@ class SueprDynamicDropdownField extends Field implements PreviewableFieldInterfa
     public $templateData;
     public $json;
     public $genError;
-    public $multi = false;
-    private $inputTemplate = "dropdown";
+    public $multi = true;
+    private $inputTemplate = "checkboxes";
+
+    public function init()
+    {
+        parent::init();
+        $this->multi = true;
+    }
 
 	public static function displayName(): string
     {
-        return Craft::t('super-dynamic-fields', 'Dropdown [Super Dyanmic Fields]');
+        return Craft::t('super-dynamic-fields', 'Checkboxes [Super Dyanmic Fields]');
     }
 
     protected function optionsSettingLabel(): string

@@ -3,7 +3,6 @@ namespace amici\SuperDynamicFields\fields;
 
 use Craft;
 
-use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
 
@@ -18,7 +17,7 @@ class SueprDynamicRadioField extends Field implements PreviewableFieldInterface
     public $templateData;
     public $json;
     public $genError;
-    public $fresh;
+    public $multi = false;
     private $inputTemplate = "radio";
 
 	public static function displayName(): string
@@ -29,11 +28,6 @@ class SueprDynamicRadioField extends Field implements PreviewableFieldInterface
     protected function optionsSettingLabel(): string
     {
         return Craft::t('super-dynamic-fields', 'Field Options');
-    }
-
-    public function normalizeValue($value, ElementInterface $element = null)
-    {
-        return $this->parseSingle($value, $element);
     }
 
 }
