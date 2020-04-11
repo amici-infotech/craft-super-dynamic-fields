@@ -30,7 +30,7 @@ class DynamicField extends Field
 
     public function getValue(): string
     {
-        return (string) Craft::getAlias($this->value);
+        return (string) $this->value;
     }
 
     public function getLabel(): string
