@@ -15,7 +15,7 @@ use amici\SuperDynamicFields\models\Settings;
 use amici\SuperDynamicFields\fields\SueprDynamicDropdownField;
 use amici\SuperDynamicFields\fields\SueprDynamicRadioField;
 use amici\SuperDynamicFields\fields\SueprDynamicCheckboxesField;
-/*use amici\SuperDynamicFields\fields\SueprDynamicMultiSelectField;*/
+use amici\SuperDynamicFields\fields\SueprDynamicMultiSelectField;
 
 class SuperDynamicFields extends Plugin
 {
@@ -48,7 +48,7 @@ class SuperDynamicFields extends Plugin
 			$event->types[] = SueprDynamicDropdownField::class;
 			$event->types[] = SueprDynamicRadioField::class;
 			$event->types[] = SueprDynamicCheckboxesField::class;
-			/*$event->types[] = SueprDynamicMultiSelectField::class;*/
+			$event->types[] = SueprDynamicMultiSelectField::class;
 		});
 	}
 

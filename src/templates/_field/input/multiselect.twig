@@ -1,0 +1,26 @@
+{% import '_includes/forms' as forms %}
+
+<div class="checkbox-group">
+	{{ forms.multiselectField({
+	    name: name,
+	    options: options,
+	    values: value,
+	}) }}
+</div>
+
+{% if genError|length %}
+	<div class="sdf-al-box border-box error matrixconfigitem text">
+		<div class="sdf-error-message">
+			<em class="alert icon">{{ genError }}</em>
+			{% if template|length %}
+			<a href="javascript:;" class="icon add error expand-code"></a>
+			{% endif %}
+		</div>
+
+		{% if template|length %}
+		<div class="code" style="display: none;">
+			<pre>{{ template }}</pre>
+		</div>
+		{% endif %}
+	</div>
+{% endif %}
