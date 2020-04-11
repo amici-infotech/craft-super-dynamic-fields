@@ -9,4 +9,5 @@ class Settings extends Model
 
     public $defaultTemplatesExt = 'json';
     public $defaultTemplatesPath = 'templates';
+
 }
