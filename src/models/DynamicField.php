@@ -15,7 +15,7 @@ class DynamicField extends Field
 
     public static function defaultLabel(): string
     {
-        return Craft::t('super-dynamic-fields', 'Dropdown [Super Dyanmic Fields]');
+        return Craft::t('super-dynamic-fields', 'Dropdown [Super Dynamic Fields]');
     }
 
     public static function settingsTemplatePath(): string

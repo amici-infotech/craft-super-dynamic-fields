@@ -29,7 +29,7 @@ class SueprDynamicMultiSelectField extends Field implements PreviewableFieldInte
 
 	public static function displayName(): string
     {
-        return Craft::t('super-dynamic-fields', 'Multi-select [Super Dyanmic Fields]');
+        return Craft::t('super-dynamic-fields', 'Multi-select [Super Dynamic Fields]');
     }
 
 }

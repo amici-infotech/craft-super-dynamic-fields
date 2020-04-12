@@ -22,7 +22,7 @@ class SueprDynamicRadioField extends Field implements PreviewableFieldInterface
 
 	public static function displayName(): string
     {
-        return Craft::t('super-dynamic-fields', 'Radio Buttons [Super Dyanmic Fields]');
+        return Craft::t('super-dynamic-fields', 'Radio Buttons [Super Dynamic Fields]');
     }
 
 }

@@ -22,7 +22,7 @@ class SueprDynamicDropdownField extends Field implements PreviewableFieldInterfa
 
 	public static function displayName(): string
     {
-        return Craft::t('super-dynamic-fields', 'Dropdown [Super Dyanmic Fields]');
+        return Craft::t('super-dynamic-fields', 'Dropdown [Super Dynamic Fields]');
     }
 
 }

@@ -29,7 +29,7 @@ class SueprDynamicCheckboxesField extends Field implements PreviewableFieldInter
 
 	public static function displayName(): string
     {
-        return Craft::t('super-dynamic-fields', 'Checkboxes [Super Dyanmic Fields]');
+        return Craft::t('super-dynamic-fields', 'Checkboxes [Super Dynamic Fields]');
     }
 
 }
