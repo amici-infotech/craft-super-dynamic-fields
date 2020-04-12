@@ -61,38 +61,38 @@ You can get Value, Label and other custom fields from selected JSON options very
 For Singles like Dropdown and Radio Buttons:
 ```bash
 // Render Value
-	{{ entry.myField }}
-	{{ entry.myField.getValue() }}
-	{{ entry.myField.value }}
+    {{ entry.myField }}
+    {{ entry.myField.getValue() }}
+    {{ entry.myField.value }}
 
 // Render Label
-	{{ entry.myField.getLabel() }}
-	{{ entry.myField.label }}
+    {{ entry.myField.getLabel() }}
+    {{ entry.myField.label }}
 
 // Render Extra fields:
-	(extras will always be an array that have other fields from json option.)
-	{% set extras = entry.myField.getExtras() %}
-	{{ extras.field1 }}
-	{{ extras.field2 }}
+    (extras will always be an array that have other fields from json option.)
+    {% set extras = entry.myField.getExtras() %}
+    {{ extras.field1 }}
+    {{ extras.field2 }}
 ```
 
 For Multi like Checkboxes and Multi select fields:
 ```bash
 {% for item in entry.myField %}
-	// Render Value
-		{{ item.myField }}
-		{{ item.myField.getValue() }}
-		{{ item.myField.value }}
+    // Render Value
+        {{ item.myField }}
+        {{ item.myField.getValue() }}
+        {{ item.myField.value }}
 
-	// Render Label
-		{{ item.myField.getLabel() }}
-		{{ item.myField.label }}
+    // Render Label
+        {{ item.myField.getLabel() }}
+        {{ item.myField.label }}
 
-	// Render Extra fields:
-		(extras will always be an array that have other fields from json option.)
-		{% set extras = item.myField.getExtras() %}
-		{{ extras.field1 }}
-		{{ extras.field2 }}
+    // Render Extra fields:
+        (extras will always be an array that have other fields from json option.)
+        {% set extras = item.myField.getExtras() %}
+        {{ extras.field1 }}
+        {{ extras.field2 }}
 
 {% endfor %}
 ```
