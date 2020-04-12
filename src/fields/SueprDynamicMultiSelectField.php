@@ -3,13 +3,13 @@ namespace amici\SuperDynamicFields\fields;
 
 use Craft;
 
-// use craft\base\Field;
-use craft\fields\BaseOptionsField;
+use craft\base\Field;
+// use craft\fields\BaseOptionsField;
 use craft\base\PreviewableFieldInterface;
 
 use amici\SuperDynamicFields\base\FieldSettings;
 
-class SueprDynamicMultiSelectField extends BaseOptionsField implements PreviewableFieldInterface
+class SueprDynamicMultiSelectField extends Field implements PreviewableFieldInterface
 {
 
     use FieldSettings;
@@ -30,11 +30,6 @@ class SueprDynamicMultiSelectField extends BaseOptionsField implements Previewab
 	public static function displayName(): string
     {
         return Craft::t('super-dynamic-fields', 'Multi-select [Super Dyanmic Fields]');
-    }
-
-    protected function optionsSettingLabel(): string
-    {
-        return Craft::t('super-dynamic-fields', 'Field Options');
     }
 
 }

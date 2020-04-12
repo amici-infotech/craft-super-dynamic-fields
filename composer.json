@@ -1,6 +1,6 @@
 {
 	"name": "amici/craft-super-dynamic-fields",
-	"description": "Use JSON templates as dropdown options.",
+	"description": "Use JSON templates as field options for dropdown, radio or checkboxes.",
 	"version": "1.0.0",
 	"type": "craft-plugin",
 	"keywords": ["dynamic", "dropdown", "radio", "checkboxes", "select", "multi select", "json", "custom", "options", "amici"],
@@ -30,7 +30,7 @@
 		"name": "Super Dynamic Fields",
 		"developer": "Amici Infotech",
 		"developerUrl": "https://amiciinfotech.com",
-		"documentationUrl": "https://docs.amiciinfotech.com/craft-cms/super-dynamic-fields",
+		"documentationUrl": "https://docs.amiciinfotech.com/craft-cms/super-dynamic-fields-craft",
 		"changelogUrl": "https://github.com/mufi/craft-super-dynamic-fields/master/CHANGELOG.md",
 		"downloadUrl": "https://github.com/mufi/craft-super-dynamic-fields/archive/master.zip",
 		"class": "amici\\SuperDynamicFields\\SuperDynamicFields"

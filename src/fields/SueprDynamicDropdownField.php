@@ -25,9 +25,4 @@ class SueprDynamicDropdownField extends Field implements PreviewableFieldInterfa
         return Craft::t('super-dynamic-fields', 'Dropdown [Super Dyanmic Fields]');
     }
 
-    protected function optionsSettingLabel(): string
-    {
-        return Craft::t('super-dynamic-fields', 'Field Options');
-    }
-
 }
