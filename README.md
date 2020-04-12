@@ -56,7 +56,7 @@ You have to follow proper JSON format to add options. There is 2 required JSON f
 ```
 
 ### Documentation
-Visit the [Super Dynamic Fields](https://docs.amiciinfotech.com/craft/super-dynamic-fields) for all documentation, guides, pricing and developer resources.
+Visit the [Super Dynamic Fields](https://docs.amiciinfotech.com/craft-cms/super-dynamic-fields-craft) for all documentation, guides, pricing and developer resources.
 
 ### Support
 Get in touch with us via the [Amici Infotech Support](https://amiciinfotech.com/contact) or by [creating a Github issue](https://github.com/amici-infotech/craft-super-dynamic-fields/issues)
