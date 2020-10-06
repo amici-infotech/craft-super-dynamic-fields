@@ -210,6 +210,11 @@ trait FieldSettings
 
         }
 
+        if (Craft::$app->getRequest()->getIsCpRequest() && Craft::$app->getRequest()->getAcceptsJson())
+        {
+            return isset($currentVal->label) ? $currentVal->label : "";
+        }
+
         return $currentVal;
 
     }
@@ -268,6 +273,17 @@ trait FieldSettings
 
             }
 
+        }
+
+        if (Craft::$app->getRequest()->getIsCpRequest() && Craft::$app->getRequest()->getAcceptsJson())
+        {
+            $retShort = [];
+            foreach ($return as $key => $value)
+            {
+                $retShort[] = $value->label;
+            }
+
+            return implode(', ', $retShort);
         }
 
         // $this->_debug(22, $return);
