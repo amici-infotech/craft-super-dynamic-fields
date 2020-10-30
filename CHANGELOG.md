@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.5 - 2020-10-30
+- Solved issue where in preview entry mode, Fields were not working.
+- Solved issue where adding new matrix block not add default value to fields.
+- Change the way to store Multi select and Checkboxes in database.
+
 ## 1.0.4 - 2020-10-06
 - Solved Error where in List entries table, SDF Checkboxes and Multi Select were throw 503 error.
 

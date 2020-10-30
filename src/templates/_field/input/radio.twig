@@ -1,10 +1,38 @@
-{% import '_includes/forms' as forms %}
+{% set options = options ?? [] %}
+{% set value = value ?? null %}
 
-{{ forms.radioGroupField({
-    name: name,
-    value: value,
-    options: options,
-}) }}
+{% set class = (class ?? [])|explodeClass|merge([
+    'radio-group',
+    (toggle ?? false) ? 'fieldtoggle' : null,
+    (disabled ?? false) ? 'disabled' : null,
+]|filter) %}
+
+{% set containerAttributes = {
+    class: class,
+    data: {
+        'target-prefix': targetPrefix ?? false,
+    },
+}|merge(containerAttributes ?? [], recursive=true) %}
+
+{% if block('attr') is defined %}
+    {% set containerAttributes = containerAttributes|merge(('<div ' ~ block('attr') ~ '>')|parseAttr, recursive=true) %}
+{% endif %}
+
+<fieldset {{ attr(containerAttributes) }}>
+    {% for key, option in options %}
+        {% if option is not iterable %}
+            {% set option = {label: option, value: key} %}
+        {% endif %}
+        <div>
+            {% include "super-dynamic-fields/_field/input/inner/_radio" with {
+                id: loop.first ? (id ?? null) : null,
+                name: name ?? null,
+                checked: (option.value is defined and option.value == value),
+                autofocus: loop.first and (autofocus ?? false) and not craft.app.request.isMobileBrowser(true),
+            }|merge(option) only %}
+        </div>
+    {% endfor %}
+</fieldset>
 
 {% if genError|length %}
 	<div class="sdf-al-box border-box error matrixconfigitem text">
