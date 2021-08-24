@@ -12,6 +12,10 @@ use amici\SuperDynamicFields\fields\data\OptionData;
 use amici\SuperDynamicFields\fields\data\SingleOptionFieldData;
 use amici\SuperDynamicFields\fields\data\MultiOptionsFieldData;
 
+use GraphQL\Type\Definition\Type;
+use craft\gql\arguments\OptionField as OptionFieldArguments;
+use amici\SuperDynamicFields\resolvers\OptionField as OptionFieldResolver;
+
 trait FieldTrait
 {
 
@@ -212,6 +216,16 @@ trait FieldTrait
 
         return $this->options;
 
+    }
+
+    public function getContentGqlType()
+    {
+        return [
+            'name' => $this->handle,
+            'type' => $this->multi ? Type::listOf(Type::string()) : Type::string(),
+            'args' => OptionFieldArguments::getArguments(),
+            'resolve' => OptionFieldResolver::class . '::resolve',
+        ];
     }
 
     private function _parseTemplateJson()
