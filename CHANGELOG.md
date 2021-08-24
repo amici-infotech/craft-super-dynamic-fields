@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.5 - 2021-08-24
+- Added GraphQL Support.
+
 ## 1.0.5 - 2020-10-30
 - Solved issue where in preview entry mode, Fields were not working.
 - Solved issue where adding new matrix block not add default value to fields.
