@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.7 - 2021-08-25
+- Solved minor issues.
+
 ## 1.0.6 - 2021-08-24
 - Added GraphQL Support.
 
