@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.7 - 2022-02-09
+- Changed DB schema for Multi Select and Checkboxes fieldtypes from string to text.
+
 ## 1.0.6 - 2021-08-24
 - Added GraphQL Support.
 

@@ -38,7 +38,9 @@ trait FieldTrait
     public function getContentColumnType(): string
     {
         if ($this->multi) {
-            // See how much data we could possibly be saving if everything was selected.
+            return Schema::TYPE_TEXT;
+
+            /*// See how much data we could possibly be saving if everything was selected.
             $length = 0;
 
             foreach ($this->options() as $option) {
@@ -49,7 +51,7 @@ trait FieldTrait
             }
 
             // Add +2 for the outer brackets and -1 for the last comma.
-            return Db::getTextualColumnTypeByContentLength($length + 1);
+            return Db::getTextualColumnTypeByContentLength($length + 1);*/
         }
 
         return Schema::TYPE_STRING;
