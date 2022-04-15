@@ -5,3 +5,6 @@
 .sdf-al-box .sdf-error-message {display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; width: 100%;}
 .sdf-al-box .code {padding-top: 20px; line-height: 1.5; width: 100%;}
 .sdf-al-box .code pre {tab-size: 2; -moz-tab-size: 2; max-width: 100%; overflow-x: hidden; max-height: 400px; overflow-y: scroll; user-select: all !important;}
+#content {
+  overflow-x: visible;
+}
