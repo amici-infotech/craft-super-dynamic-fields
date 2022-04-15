@@ -17,6 +17,7 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
 
     public bool $multi = false;
     private string $inputTemplate = "dropdown";
+    protected bool $optgroups = true;
 
 	public static function displayName(): string
     {
@@ -28,28 +29,32 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
         return SingleOptionFieldData::class;
     }
 
-    protected function inputHtml(mixed $value, ElementInterface $element = null): string
+    protected function inputHtml(mixed $value, ?ElementInterface $element = null): string
     {
         /** @var SingleOptionFieldData $value */
+        $options = $this->translatedOptions();
+
+        /** @var SingleOptionFieldData $value */
         if (! $value->valid) {
-            Craft::$app->getView()->setInitialDeltaValue($this->handle, null);
+            Craft::$app->getView()->setInitialDeltaValue($this->handle, $value->getValue());
         }
 
         $view           = Craft::$app->getView();
         $mode           = $view->getTemplateMode();
-        $id             = $view->formatInputId($this->handle);
         $nameSpacedId   = $view->namespaceInputId($id);
 
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
 
         return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
-            'id'        => $id,
-            'name'      => $this->handle,
-            'options'   => $this->translatedOptions(),
-            'value'     => $value,
-            'genError'  => $this->genError,
-            'template'  => $this->templateData
+            'id'          => $this->getInputId(),
+            'describedBy' => $this->describedBy,
+            'name'        => $this->handle,
+            'value'       => $value,
+            'options'     => $options,
+            'genError'    => $this->genError,
+            'template'    => $this->templateData
         ]);
 
     }
+
 }

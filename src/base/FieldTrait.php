@@ -15,19 +15,20 @@ use amici\SuperDynamicFields\fields\data\MultiOptionsFieldData;
 use GraphQL\Type\Definition\Type;
 use craft\gql\arguments\OptionField as OptionFieldArguments;
 use amici\SuperDynamicFields\resolvers\OptionField as OptionFieldResolver;
+use craft\helpers\Cp;
 
 trait FieldTrait
 {
 
-    public string $template;
-    public string $templateData;
-    public string $json;
-    public string $genError;
-    public array $options;
+    public ?string $template = "";
+    public ?string $templateData;
+    public ?string $json;
+    public ?string $genError;
+    // public ?array $options;
 
     protected function optionsSettingLabel(): string
     {
-        return Craft::t('super-dynamic-fields', 'Field Options');
+        return Craft::t('super-dynamic-fields', 'JSON Template');
     }
 
     public static function defaultSelectionLabel(): string
@@ -66,6 +67,7 @@ trait FieldTrait
     {
         return Craft::$app->getView()->renderTemplate('super-dynamic-fields/_field/settings', [
             'settings' => $this,
+            'label' => $this->optionsSettingLabel()
         ]);
     }
 

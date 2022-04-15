@@ -14,7 +14,7 @@
 {% from _self import errorList %}
 
 {{ forms.autosuggestField({
-    label: "JSON Template"|t('super-dynamic-fields'),
+    label: label,
     instructions: "The template Craft CMS will use to get options"|t('super-dynamic-fields'),
     id: 'template',
     name: 'template',

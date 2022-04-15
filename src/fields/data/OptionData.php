@@ -6,13 +6,13 @@ use craft\base\Serializable;
 
 class OptionData implements Serializable
 {
-    public string $label;
-    public string $value;
-    public string $selected;
+    public ?string $label = null;
+    public ?string $value = null;
+    public bool $selected;
     public bool $valid;
-    public array $extras;
+    public ?array $extras;
 
-    public function __construct(string $label = null, string $value = null, array $extras, bool $selected, bool $valid = true)
+    public function __construct(?string $label, ?string $value, ?array $extras, bool $selected, bool $valid = true)
     {
         $this->label = $label;
         $this->value = $value;
@@ -52,7 +52,7 @@ class OptionData implements Serializable
         return (string) Craft::getAlias($this->label);
     }
 
-    public function getExtras()
+    public function getExtras(): mixed
     {
         return (empty($this->extras) || ! is_array($this->extras) || count($this->extras) == 0) ? null : $this->extras;
     }
