@@ -5,12 +5,12 @@ use Craft;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
-class SuperDynamicFieldsAsset extends AssetBundle
+class SuperDynamicFieldsSettingsAsset extends AssetBundle
 {
 
     public function init(): void
     {
-        $this->sourcePath = "@amici/SuperDynamicFields/resources/dist";
+        $this->sourcePath = "@amici/SuperDynamicFields/resources/settings/dist";
 
         $this->depends = [
             // VerbbCpAsset::class,

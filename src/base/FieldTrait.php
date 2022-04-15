@@ -11,7 +11,7 @@ use craft\helpers\Json;
 use amici\SuperDynamicFields\fields\data\OptionData;
 use amici\SuperDynamicFields\fields\data\SingleOptionFieldData;
 use amici\SuperDynamicFields\fields\data\MultiOptionsFieldData;
-use amici\SuperDynamicFields\assetbundles\SuperDynamicFieldsAsset;
+use amici\SuperDynamicFields\assetbundles\SuperDynamicFieldsSettingsAsset;
 
 use GraphQL\Type\Definition\Type;
 use craft\gql\arguments\OptionField as OptionFieldArguments;
@@ -67,7 +67,7 @@ trait FieldTrait
     public function getSettingsHtml(): ?string
     {
         $view = Craft::$app->getView();
-        $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
+        $view->registerAssetBundle(SuperDynamicFieldsSettingsAsset::class);
 
         return Craft::$app->getView()->renderTemplate('super-dynamic-fields/_field/settings', [
             'settings' => $this,
