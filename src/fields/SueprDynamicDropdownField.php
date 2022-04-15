@@ -41,12 +41,13 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
 
         $view           = Craft::$app->getView();
         $mode           = $view->getTemplateMode();
+        $id             =  $this->getInputId();
         $nameSpacedId   = $view->namespaceInputId($id);
 
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
 
         return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
-            'id'          => $this->getInputId(),
+            'id'          => $id,
             'describedBy' => $this->describedBy,
             'name'        => $this->handle,
             'value'       => $value,

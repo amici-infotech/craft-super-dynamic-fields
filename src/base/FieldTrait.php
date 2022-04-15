@@ -21,9 +21,9 @@ trait FieldTrait
 {
 
     public ?string $template = "";
-    public ?string $templateData;
-    public ?string $json;
-    public ?string $genError;
+    public ?string $templateData = "";
+    public $json = "";
+    public ?string $genError = "";
     // public ?array $options;
 
     protected function optionsSettingLabel(): string
