@@ -1,4 +1,4 @@
-{%- spaceless %}
+{% apply spaceless %}
 
 {% set id = id ?? "checkbox#{random()}" %}
 {% set label = label ?? null %}
@@ -19,7 +19,7 @@
 }|merge(inputAttributes ?? [], recursive=true) %}
 
 {% if block('attr') is defined %}
-    {%- set inputAttributes = inputAttributes|merge(('<div ' ~ block('attr') ~ '>')|parseAttr, recursive=true) %}
+    {% set inputAttributes = inputAttributes|merge(('<div ' ~ block('attr') ~ '>')|parseAttr, recursive=true) %}
 {% endif %}
 
 {% if name is defined and (name|length < 3 or name|slice(-2) != '[]') %}
@@ -35,4 +35,4 @@
     {% endif %}
 </label>
 
-{% endspaceless -%}
+{% endapply %}
