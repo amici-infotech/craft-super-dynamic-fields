@@ -10,7 +10,7 @@ use craft\web\assets\cp\CpAsset;
 class SuperDynamicFieldsAsset extends AssetBundle
 {
 
-    public function init()
+    public function init(): void
     {
         $this->sourcePath = "@amici/SuperDynamicFields/resources/dist";
 

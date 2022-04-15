@@ -15,8 +15,8 @@ class SueprDynamicRadioField extends BaseOptionsField implements SortableFieldIn
 
     use FieldTrait;
 
-    public $multi = false;
-    private $inputTemplate = "radio";
+    public bool $multi = false;
+    private string $inputTemplate = "radio";
 
     public static function displayName(): string
     {
@@ -28,7 +28,7 @@ class SueprDynamicRadioField extends BaseOptionsField implements SortableFieldIn
         return SingleOptionFieldData::class;
     }
 
-    protected function inputHtml($value, ElementInterface $element = null): string
+    protected function inputHtml(mixed $value, ElementInterface $element = null): string
     {
         /** @var SingleOptionFieldData $value */
         if (! $value->valid) {

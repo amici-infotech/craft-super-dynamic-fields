@@ -10,8 +10,6 @@ use amici\SuperDynamicFields\libraries\General;
 trait PluginTrait
 {
 
-    public static $plugin;
-
     private function _setPluginComponents()
     {
         $this->setComponents([

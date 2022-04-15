@@ -4,11 +4,12 @@ namespace amici\SuperDynamicFields\libraries;
 use Craft;
 use craft\helpers\FileHelper;
 use amici\SuperDynamicFields\SuperDynamicFields;
+use craft\base\Plugin;
 
 class General
 {
 
-	public $plugin;
+	public Plugin $plugin;
 
 	function __construct()
 	{

@@ -22,26 +22,22 @@ class SuperDynamicFields extends Plugin
 
 	use PluginTrait;
 
-	public static $app;
-	public static $plugin;
-	public $hasCpSection 		= false;
-	public $hasCpSettings 		= false;
-    public static $pluginHandle = 'super-dynamic-fields';
-	public $schemaVersion 		= '1.0.7';
+	public static Plugin $plugin;
+	public string $schemaVersion = '1.0.7';
+	public string $minVersionRequired = '1.0.0';
+	public bool $hasCpSettings = false;
+	public bool $hasCpSection = false;
 
-	public function init()
+	public function init(): void
 	{
-
 	    parent::init();
 
 	    self::$plugin = $this;
-	    // self::$app = new App();
 	    $this->_registerFields();
 	    $this->_setPluginComponents();
-
 	}
 
-	private function _registerFields()
+	private function _registerFields(): void
 	{
 		Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
 			$event->types[] = SueprDynamicDropdownField::class;
@@ -56,7 +52,7 @@ class SuperDynamicFields extends Plugin
 	    return new Settings();
 	}
 
-	protected function afterInstall()
+	protected function afterInstall(): void
 	{
 
 	}
@@ -67,10 +63,9 @@ class SuperDynamicFields extends Plugin
 		return $parent;
 	}*/
 
-	public function beforeUninstall(): bool
+	public function beforeUninstall(): void
 	{
-		return true;
+
 	}
 
 }
-?>

@@ -16,10 +16,10 @@ class SueprDynamicMultiSelectField extends BaseOptionsField
 
     use FieldTrait;
 
-    public $multi = true;
-    private $inputTemplate = "multiselect";
+    public bool $multi = true;
+    private string $inputTemplate = "multiselect";
 
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->multi = true;
@@ -35,7 +35,7 @@ class SueprDynamicMultiSelectField extends BaseOptionsField
         return MultiOptionsFieldData::class;
     }
 
-    protected function inputHtml($value, ElementInterface $element = null): string
+    protected function inputHtml(mixed $value, ElementInterface $element = null): string
     {
         /** @var MultiOptionsFieldData $value */
         if (ArrayHelper::contains($value, 'valid', false, true)) {

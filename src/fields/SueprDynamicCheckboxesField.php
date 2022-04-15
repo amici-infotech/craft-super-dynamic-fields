@@ -16,10 +16,10 @@ class SueprDynamicCheckboxesField extends BaseOptionsField
 
     use FieldTrait;
 
-    public $multi = true;
-    private $inputTemplate = "checkboxes";
+    public bool $multi = true;
+    private string $inputTemplate = "checkboxes";
 
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->multi = true;
@@ -35,7 +35,7 @@ class SueprDynamicCheckboxesField extends BaseOptionsField
         return MultiOptionsFieldData::class;
     }
 
-    protected function inputHtml($value, ElementInterface $element = null): string
+    protected function inputHtml(mixed $value, ElementInterface $element = null): string
     {
         /** @var MultiOptionsFieldData $value */
         if (ArrayHelper::contains($value, 'valid', false, true)) {

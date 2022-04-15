@@ -6,11 +6,11 @@ use craft\base\Serializable;
 
 class OptionData implements Serializable
 {
-    public $label;
-    public $value;
-    public $selected;
-    public $valid;
-    public $extras;
+    public string $label;
+    public string $value;
+    public string $selected;
+    public bool $valid;
+    public array $extras;
 
     public function __construct(string $label = null, string $value = null, array $extras, bool $selected, bool $valid = true)
     {
@@ -37,7 +37,7 @@ class OptionData implements Serializable
         return $this->getValue() ? true : false;
     }
 
-    public function serialize()
+    public function serialize(): mixed
     {
         return $this->value;
     }

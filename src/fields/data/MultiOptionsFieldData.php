@@ -5,7 +5,7 @@ namespace amici\SuperDynamicFields\fields\data;
 class MultiOptionsFieldData extends \ArrayObject
 {
 
-    private $_options = [];
+    private array $_options = [];
 
     public function getOptions(): array
     {

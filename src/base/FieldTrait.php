@@ -19,11 +19,11 @@ use amici\SuperDynamicFields\resolvers\OptionField as OptionFieldResolver;
 trait FieldTrait
 {
 
-    public $template;
-    public $templateData;
-    public $json;
-    public $genError;
-    public $options;
+    public string $template;
+    public string $templateData;
+    public string $json;
+    public string $genError;
+    public array $options;
 
     protected function optionsSettingLabel(): string
     {
@@ -62,7 +62,7 @@ trait FieldTrait
         return true;
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('super-dynamic-fields/_field/settings', [
             'settings' => $this,
@@ -76,7 +76,7 @@ trait FieldTrait
         return $rules;
     }
 
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue($value, ElementInterface $element = null): mixed
     {
 
         if ($value instanceof SingleOptionFieldData || $value instanceof MultiOptionsFieldData) {
@@ -165,7 +165,7 @@ trait FieldTrait
 
     }
 
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue($value, ElementInterface $element = null): mixed
     {
         if ($value instanceof MultiOptionsFieldData) {
             $serialized = [];
@@ -220,7 +220,7 @@ trait FieldTrait
 
     }
 
-    public function getContentGqlType()
+    public function getContentGqlType(): array
     {
         return [
             'name' => $this->handle,
@@ -230,7 +230,7 @@ trait FieldTrait
         ];
     }
 
-    private function _parseTemplateJson()
+    private function _parseTemplateJson(): mixed
     {
 
         $view       = Craft::$app->getView();

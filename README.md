@@ -1,4 +1,4 @@
-# Super Dynamic Fields Plugin for Craft CMS 3
+# Super Dynamic Fields Plugin for Craft CMS 4
 
 Instead of adding key/values in field settings, You can now include any Craft CMS template where you can add JSON variable for options. If you have tons of fields with options and you dont want to add options in each field, this is best plugin for you. This field produce Checkboxes, Radio buttons, Select dropdown (single or multiple) selections. This fieldtype supports backend and frontend channel forms including normal fields, GRID and Fluid field types. Most important use is, As it comes from template, You can use any Craft CMS tags to generate options. This Addon just not stick with label and value fields for option. It gives you custom field support too. In the same JSON, you can pass any variables and fetch those variable at frontend with simple Craft CMS tags. Find more info on our docs.
 

@@ -7,7 +7,7 @@ use craft\base\Model;
 class Settings extends Model
 {
 
-    public $defaultTemplatesExt = 'json';
-    public $defaultTemplatesPath = 'templates';
+    public string $defaultTemplatesExt = 'json';
+    public string $defaultTemplatesPath = 'templates';
 
 }
