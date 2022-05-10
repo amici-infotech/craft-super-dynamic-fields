@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0 - 2022-05-10
+- Upgraded to support craft cms 4.
+
+> {warning} Super PDF now requires PHP 8.0.2 or newer.
+
+> {warning} Super PDF now requires Craft CMS 4.0.0 or newer.
+
 ## 1.0.7 - 2022-02-09
 - Changed DB schema for Multi Select and Checkboxes fieldtypes from string to text.
 
