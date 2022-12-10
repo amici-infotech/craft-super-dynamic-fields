@@ -37,6 +37,8 @@ class SueprDynamicMultiSelectField extends BaseOptionsField
 
     protected function inputHtml($value, ElementInterface $element = null): string
     {
+        $this->element = $element;
+
         /** @var MultiOptionsFieldData $value */
         if (ArrayHelper::contains($value, 'valid', false, true)) {
             Craft::$app->getView()->setInitialDeltaValue($this->handle, null);
