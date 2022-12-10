@@ -25,6 +25,8 @@ trait FieldTrait
     public ?string $templateData = "";
     public $json = "";
     public ?string $genError = "";
+    public $element;
+
     // public ?array $options;
 
     protected function optionsSettingLabel(): string
@@ -82,8 +84,15 @@ trait FieldTrait
         return $rules;
     }
 
+    public function getElementValidationRules(): array
+    {
+        return [];
+        // Removed range validation for options as template data may vary per element group
+    }
+
     public function normalizeValue($value, ElementInterface $element = null): mixed
     {
+        $this->element = $element;
 
         if ($value instanceof SingleOptionFieldData || $value instanceof MultiOptionsFieldData) {
             return $value;
@@ -173,6 +182,8 @@ trait FieldTrait
 
     public function serializeValue($value, ElementInterface $element = null): mixed
     {
+        $this->element = $element;
+
         if ($value instanceof MultiOptionsFieldData) {
             $serialized = [];
             foreach ($value as $selectedValue) {
@@ -187,6 +198,8 @@ trait FieldTrait
 
     public function isValueEmpty($value, ElementInterface $element): bool
     {
+        $this->element = $element;
+
         /** @var MultiOptionsFieldData|SingleOptionFieldData $value */
         if ($value instanceof SingleOptionFieldData) {
             return $value->value === null || $value->value === '';
@@ -199,10 +212,11 @@ trait FieldTrait
     {
 
         $this->options = [];
-        if($this->templateData == "")
+        /*if($this->templateData == "")
         {
             $this->json = $this->_parseTemplateJson();
-        }
+        }*/
+        $this->json = $this->_parseTemplateJson();
 
         if(is_array($this->json))
         {
@@ -241,7 +255,9 @@ trait FieldTrait
 
         $view       = Craft::$app->getView();
         $mode       = $view->getTemplateMode();
-        $variables  = [];
+        $variables  = [
+            'current' => $this
+        ];
         $json       = false;
 
         try
@@ -253,7 +269,7 @@ trait FieldTrait
                 $view->setTemplateMode($view::TEMPLATE_MODE_SITE);
                 $this->templateData = $view->renderTemplate($this->template, $variables);
                 $view->setTemplateMode($mode);
-                $json = json_decode($this->templateData, true);;
+                $json = json_decode($this->templateData, true);
             }
 
             if(! is_array($json))

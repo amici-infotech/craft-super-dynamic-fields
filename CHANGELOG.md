@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.0.0.1 - 2022-12-10
+- now new `current` object is available inside SDF templates where you can grab current ELEMENT and use all fields inside that element.
+```
+{% set tableField = current.element.tableField ?? null %}
+[
+    { "label" : "-- Select -- ", "value": "" }
+    {% for item in tableField %}
+    ,{ "label" : "{{ item.test1 }}", "value": "{{ item.test1 }}" }
+    {% endfor %}
+]
+```
+
+If you are in child element such as matrix, You can go to parent entry by `owner` object.
+```
+{% set entry = current.element.owner ?? null %}
+[
+    { "label" : "-- Select -- ", "value": "" }
+    {% for item in entry.matrixField.all() %}
+    ,{ "label" : "{{ item.heading }}", "value": "{{ item.getId() }}" }
+    {% endfor %}
+]
+```
+
 ## 2.0.0 - 2022-05-10
 - Upgraded to support craft cms 4.
 

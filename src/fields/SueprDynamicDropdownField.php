@@ -31,6 +31,8 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
 
     protected function inputHtml(mixed $value, ?ElementInterface $element = null): string
     {
+        $this->element = $element;
+
         /** @var SingleOptionFieldData $value */
         $options = $this->translatedOptions();
 

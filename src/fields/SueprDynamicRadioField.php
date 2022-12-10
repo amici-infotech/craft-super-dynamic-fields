@@ -30,6 +30,8 @@ class SueprDynamicRadioField extends BaseOptionsField implements SortableFieldIn
 
     protected function inputHtml(mixed $value, ElementInterface $element = null): string
     {
+        $this->element = $element;
+
         /** @var SingleOptionFieldData $value */
         if (! $value->valid) {
             Craft::$app->getView()->setInitialDeltaValue($this->handle, null);
