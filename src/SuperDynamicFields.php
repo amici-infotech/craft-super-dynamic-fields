@@ -23,8 +23,8 @@ class SuperDynamicFields extends Plugin
 	use PluginTrait;
 
 	public static Plugin $plugin;
-	public string $schemaVersion = '2.0.0.1';
-	public string $minVersionRequired = '2.0.0';
+	public string $schemaVersion = '2.0.0.2';
+	// public string $minVersionRequired = '2.0.0';
 	public bool $hasCpSettings = false;
 	public bool $hasCpSection = false;
 

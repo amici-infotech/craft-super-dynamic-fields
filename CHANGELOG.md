@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0.2 - 2023-04-28
+- Removed min version required dependancy.
+
 ## 2.0.0.1 - 2022-12-10
 - now new `current` object is available inside SDF templates where you can grab current ELEMENT and use all fields inside that element.
 ```
