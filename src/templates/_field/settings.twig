@@ -23,3 +23,12 @@
     value: settings.template,
     errors: (settings is defined ? settings.getErrors('template') : null),
 }) }}
+
+{{ forms.lightswitchField({
+    label: 'Enable Cached Options?' | t('super-dynamic-fields'),
+    instructions: 'If turned ON, we will create options from JSON on the first field load only, and will not parse JSON template for each and every same field on the given form.\nThis will make field load very fast. Turn this off, if you want to use element related queries in JSON template.' | t('super-dynamic-fields'),
+    id: 'cachedOptions',
+    name: 'cachedOptions',
+    on: settings.cachedOptions,
+    errors: (settings is defined ? settings.getErrors('cachedOptions') : null),
+}) }}

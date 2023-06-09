@@ -19,6 +19,7 @@ use amici\SuperDynamicFields\resolvers\OptionField as OptionFieldResolver;
 trait FieldTrait
 {
 
+    public $cachedOptions = true;
     public $template;
     public $templateData;
     public $json;
@@ -205,11 +206,10 @@ trait FieldTrait
     {
 
         $this->options = [];
-        // if($this->templateData == "")
-        // {
-        //     $this->json = $this->_parseTemplateJson();
-        // }
-        $this->json = $this->_parseTemplateJson();
+        if($this->templateData == "" || ! $this->cachedOptions)
+        {
+            $this->json = $this->_parseTemplateJson();
+        }
 
         if(is_array($this->json))
         {

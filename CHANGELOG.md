@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.7.2 - 2023-06-09
+- Added cachedOptions field in field settings. Turn that setting while creating field will cache json options and will not render JSON parse from template again and again. That will make field load fast.
+
 ## 1.0.7.1 - 2022-12-10
 - now new `current` object is available inside SDF templates where you can grab current ELEMENT and use all fields inside that element.
 ```
