@@ -22,6 +22,7 @@ trait FieldTrait
 {
 
     public ?string $template = "";
+    public ?bool $cachedOptions = true;
     public ?string $templateData = "";
     public $json = "";
     public ?string $genError = "";
@@ -212,11 +213,10 @@ trait FieldTrait
     {
 
         $this->options = [];
-        /*if($this->templateData == "")
+        if($this->templateData == "" || ! $this->cachedOptions)
         {
             $this->json = $this->_parseTemplateJson();
-        }*/
-        $this->json = $this->_parseTemplateJson();
+        }
 
         if(is_array($this->json))
         {

@@ -2,6 +2,7 @@
 
 ## 2.0.0.3 - 2023-06-09
 - Fixed a bug where in conditional rules, options for SDF were not showing.
+- Added cachedOptions field in field settings. Turn that setting while creating field will cache json options and will not render JSON parse from template again and again. That will make field load fast.
 
 ## 2.0.0.2 - 2023-04-28
 - Removed min version required dependancy.
