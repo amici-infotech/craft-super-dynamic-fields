@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0.3 - 2023-06-09
+- Fixed a bug where in conditional rules, options for SDF were not showing.
+
 ## 2.0.0.2 - 2023-04-28
 - Removed min version required dependancy.
 

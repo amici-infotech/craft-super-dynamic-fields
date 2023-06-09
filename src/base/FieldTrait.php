@@ -3,20 +3,20 @@ namespace amici\SuperDynamicFields\base;
 
 use Craft;
 use yii\db\Schema;
-use craft\helpers\Db;
+use GraphQL\Type\Definition\Type;
 
 use craft\base\ElementInterface;
+use craft\fields\conditions\OptionsFieldConditionRule;
+use craft\gql\arguments\OptionField as OptionFieldArguments;
+use craft\helpers\Cp;
+use craft\helpers\Db;
 use craft\helpers\Json;
 
+use amici\SuperDynamicFields\assetbundles\SuperDynamicFieldsSettingsAsset;
 use amici\SuperDynamicFields\fields\data\OptionData;
 use amici\SuperDynamicFields\fields\data\SingleOptionFieldData;
 use amici\SuperDynamicFields\fields\data\MultiOptionsFieldData;
-use amici\SuperDynamicFields\assetbundles\SuperDynamicFieldsSettingsAsset;
-
-use GraphQL\Type\Definition\Type;
-use craft\gql\arguments\OptionField as OptionFieldArguments;
 use amici\SuperDynamicFields\resolvers\OptionField as OptionFieldResolver;
-use craft\helpers\Cp;
 
 trait FieldTrait
 {
@@ -291,6 +291,12 @@ trait FieldTrait
 
         return $json;
 
+    }
+
+    public function getElementConditionRuleType(): array|string|null
+    {
+        $this->normalizeValue("");
+        return OptionsFieldConditionRule::class;
     }
 
 }
