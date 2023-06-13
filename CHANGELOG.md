@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0.4 - 2023-06-13
+- Fixed a bug where Template was not parsing when field triggers from another plugin or component and that was throwing Memory limit issue.
+- Removed Mode and added PATH for template parsing
+
 ## 2.0.0.3 - 2023-06-09
 - Fixed a bug where in conditional rules, options for SDF were not showing.
 - Added cachedOptions field in field settings. Turn that setting while creating field will cache json options and will not render JSON parse from template again and again. That will make field load fast.

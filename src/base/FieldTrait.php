@@ -254,7 +254,7 @@ trait FieldTrait
     {
 
         $view       = Craft::$app->getView();
-        $mode       = $view->getTemplateMode();
+        $path       = $view->getTemplatesPath();
         $variables  = [
             'current' => $this
         ];
@@ -266,9 +266,9 @@ trait FieldTrait
             $json = false;
             if($this->template)
             {
-                $view->setTemplateMode($view::TEMPLATE_MODE_SITE);
-                $this->templateData = $view->renderTemplate($this->template, $variables);
-                $view->setTemplateMode($mode);
+                $view->setTemplatesPath(Craft::$app->getPath()->getSiteTemplatesPath());
+                $this->templateData = $view->renderPageTemplate($this->template, $variables, $view::TEMPLATE_MODE_SITE);
+                $view->setTemplatesPath($path);
                 $json = json_decode($this->templateData, true);
             }
 
@@ -280,12 +280,12 @@ trait FieldTrait
         }
         catch (\ErrorException $e)
         {
-            $view->setTemplateMode($mode);
+            $view->setTemplatesPath($path);
             $this->genError = $e->getMessage();
         }
         catch (\Exception $e)
         {
-            $view->setTemplateMode($mode);
+            $view->setTemplatesPath($path);
             $this->genError = $e->getMessage();
         }
 
