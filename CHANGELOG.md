@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.7.3 - 2023-06-13
+- Fixed a bug where Template was not parsing when field triggers from another plugin or component and that was throwing Memory limit issue.
+
 ## 1.0.7.2 - 2023-06-09
 - Added cachedOptions field in field settings. Turn that setting while creating field will cache json options and will not render JSON parse from template again and again. That will make field load fast.
 
