@@ -247,7 +247,6 @@ trait FieldTrait
     {
 
         $view       = Craft::$app->getView();
-        $mode       = $view->getTemplateMode();
         $path       = $view->getTemplatesPath();
         $json       = false;
         $variables  = [
@@ -274,12 +273,12 @@ trait FieldTrait
         }
         catch (\ErrorException $e)
         {
-            $view->setTemplateMode($mode);
+            $view->setTemplatesPath($path);
             $this->genError = $e->getMessage();
         }
         catch (\Exception $e)
         {
-            $view->setTemplateMode($mode);
+            $view->setTemplatesPath($path);
             $this->genError = $e->getMessage();
         }
 
