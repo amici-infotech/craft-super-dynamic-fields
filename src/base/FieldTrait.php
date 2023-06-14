@@ -267,7 +267,7 @@ trait FieldTrait
             if($this->template)
             {
                 $view->setTemplatesPath(Craft::$app->getPath()->getSiteTemplatesPath());
-                $this->templateData = $view->renderPageTemplate($this->template, $variables, $view::TEMPLATE_MODE_SITE);
+                $this->templateData = $view->renderTemplate($this->template, $variables, $view::TEMPLATE_MODE_SITE);
                 $view->setTemplatesPath($path);
                 $json = json_decode($this->templateData, true);
             }
