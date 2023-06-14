@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.7.4 - 2023-06-14
+- Fixed a bug with rendering as include template instead of full page template.
+
 ## 1.0.7.3 - 2023-06-13
 - Fixed a bug where Template was not parsing when field triggers from another plugin or component and that was throwing Memory limit issue.
 - Removed Mode and added PATH for template parsing

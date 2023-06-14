@@ -27,7 +27,7 @@ class SuperDynamicFields extends Plugin
 	public $hasCpSection 		= false;
 	public $hasCpSettings 		= false;
     public static $pluginHandle = 'super-dynamic-fields';
-	public $schemaVersion 		= '1.0.7.3';
+	public $schemaVersion 		= '1.0.7.4';
 
 	public function init()
 	{
