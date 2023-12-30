@@ -5,6 +5,7 @@ use Craft;
 use craft\fields\BaseOptionsField;
 use craft\base\SortableFieldInterface;
 use craft\base\ElementInterface;
+use craft\helpers\Cp;
 
 use amici\SuperDynamicFields\base\FieldTrait;
 use amici\SuperDynamicFields\fields\data\SingleOptionFieldData;
@@ -40,18 +41,26 @@ class SueprDynamicRadioField extends BaseOptionsField implements SortableFieldIn
         }
 
         $view           = Craft::$app->getView();
-        $mode           = $view->getTemplateMode();
         $id             = $view->formatInputId($this->handle);
-        $nameSpacedId   = $view->namespaceInputId($id);
 
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
-        return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
+        /* return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
             'id'        => $id,
             'name'      => $this->handle,
             'options'   => $this->translatedOptions(),
             'value'     => $value,
             'genError'  => $this->genError,
             'template'  => $this->templateData
+        ]); */
+
+        return Cp::renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
+            'id' => $this->getInputId(),
+            'describedBy' => $this->describedBy,
+            'name' => $this->handle,
+            'value' => $this->encodeValue($value),
+            'options' => $this->translatedOptions(true, $value, $element),
+            'genError'    => $this->genError,
+            'template'    => $this->templateData
         ]);
 
     }
