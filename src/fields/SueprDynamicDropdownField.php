@@ -17,7 +17,6 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
     use FieldTrait;
 
     public bool $multi = false;
-    // private string $inputTemplate = "_dropdown";
     private string $inputTemplate = "dropdown";
     protected bool $optgroups = true;
 
@@ -45,35 +44,13 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
             Craft::$app->getView()->setInitialDeltaValue($this->handle, $value->getValue());
         }
 
-        $view           = Craft::$app->getView();
-        $mode           = $view->getTemplateMode();
-        $id             =  $this->getInputId();
-        $nameSpacedId   = $view->namespaceInputId($id);
-
+        $view = Craft::$app->getView();
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
 
         $encValue = $this->encodeValue($value);
         if ($encValue === null || $encValue === '') {
             $encValue = '__BLANK__';
         }
-
-        /* return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
-            'id'          => $id,
-            'describedBy' => $this->describedBy,
-            'name'        => $this->handle,
-            'value'       => $value,
-            'options'     => $options,
-            'genError'    => $this->genError,
-            'template'    => $this->templateData
-        ]); */
-
-        /* return Cp::selectizeHtml([
-            'id' => $this->getInputId(),
-            'describedBy' => $this->describedBy,
-            'name' => $this->handle,
-            'value' => $encValue,
-            'options' => $options,
-        ]); */
 
         return Cp::renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
             'id' => $this->getInputId(),

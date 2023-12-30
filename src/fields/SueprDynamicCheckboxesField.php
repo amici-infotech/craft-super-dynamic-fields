@@ -46,14 +46,10 @@ class SueprDynamicCheckboxesField extends BaseOptionsField
             Craft::$app->getView()->setInitialDeltaValue($this->handle, null);
         }
 
-        $view           = Craft::$app->getView();
-        $mode           = $view->getTemplateMode();
-        $id             = $view->formatInputId($this->handle);
-        $nameSpacedId   = $view->namespaceInputId($id);
-
+        $view = Craft::$app->getView();
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
         return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
-            'id'        => $id,
+            'id'        => $this->getInputId(),
             'name'      => $this->handle,
             'options'   => $this->translatedOptions(),
             'values'     => $value,

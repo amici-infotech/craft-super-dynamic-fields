@@ -40,18 +40,8 @@ class SueprDynamicRadioField extends BaseOptionsField implements SortableFieldIn
             Craft::$app->getView()->setInitialDeltaValue($this->handle, null);
         }
 
-        $view           = Craft::$app->getView();
-        $id             = $view->formatInputId($this->handle);
-
+        $view = Craft::$app->getView();
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
-        /* return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
-            'id'        => $id,
-            'name'      => $this->handle,
-            'options'   => $this->translatedOptions(),
-            'value'     => $value,
-            'genError'  => $this->genError,
-            'template'  => $this->templateData
-        ]); */
 
         return Cp::renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
             'id' => $this->getInputId(),

@@ -88,18 +88,8 @@ class SueprDynamicMultiSelectField extends BaseOptionsField
             Craft::$app->getView()->setInitialDeltaValue($this->handle, null);
         }
 
-        $view           = Craft::$app->getView();
+        $view = Craft::$app->getView();
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
-
-        // $id             = $view->formatInputId($this->handle);
-        /* return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
-            'id'        => $id,
-            'name'      => $this->handle,
-            'options'   => $this->translatedOptions(),
-            'values'     => $value,
-            'genError'  => $this->genError,
-            'template'  => $this->templateData,
-        ]); */
 
         return Cp::renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
             'id'        => $this->getInputId(),
