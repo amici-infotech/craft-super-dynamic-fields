@@ -11,6 +11,7 @@ use craft\gql\arguments\OptionField as OptionFieldArguments;
 use craft\helpers\Cp;
 use craft\helpers\Db;
 use craft\helpers\Json;
+use craft\helpers\StringHelper;
 
 use amici\SuperDynamicFields\assetbundles\SuperDynamicFieldsSettingsAsset;
 use amici\SuperDynamicFields\fields\data\OptionData;
@@ -102,28 +103,37 @@ trait FieldTrait
         }
 
         if (is_string($value) && (
-                $value === '' ||
-                strpos($value, '[') === 0 ||
-                strpos($value, '{') === 0
-            )) {
+            str_starts_with($value, '[') ||
+            str_starts_with($value, '{')
+        )) {
             $value = Json::decodeIfJson($value);
-        } else if ($value === null && $this->isFresh($element)) {
+        } elseif ($value === '' && $this->multi) {
+            $value = [];
+        } elseif ($value === '__BLANK__') {
+            $value = '';
+        } elseif ($value === null && $this->isFresh($element)) {
             $value = $this->defaultValue();
         }
 
         // Normalize to an array of strings
         $selectedValues = [];
         foreach ((array)$value as $val) {
+            $val = (string)$val;
+            if (str_starts_with($val, 'base64:')) {
+                $val = base64_decode(StringHelper::removeLeft($val, 'base64:'));
+            }
             $selectedValues[] = $val;
         }
 
+        $selectedBlankOption = false;
         $options = [];
         $optionValues = [];
         $optionLabels = [];
+        $optionExtras = [];
 
         foreach ($this->options() as $option) {
             if (! isset($option['optgroup'])) {
-                $selected = in_array($option['value'], $selectedValues, true);
+                $selected = $this->isOptionSelected($option, $value, $selectedValues, $selectedBlankOption);
 
                 $extras  = $option;
                 unset($extras['value']);
@@ -133,6 +143,7 @@ trait FieldTrait
                 $options[] = new OptionData($option['label'], $option['value'], $extras, $selected, true);
                 $optionValues[] = (string)$option['value'];
                 $optionLabels[] = (string)$option['label'];
+                $optionExtras[] = $extras;
             }
         }
 
@@ -145,11 +156,9 @@ trait FieldTrait
             {
                 $index = array_search($selectedValue, $optionValues, true);
                 $valid = $index !== false;
-                if($valid)
-                {
-                    $current = $options[$index];
-                    $selectedOptions[] = new OptionData($current->label, $current->value, $current->extras, true, $valid);
-                }
+                $label = $valid ? $optionLabels[$index] : null;
+                $extras = $valid ? $optionExtras[$index] : null;
+                $selectedOptions[] = new OptionData($label, $selectedValue, $extras, true, $valid);
             }
 
             $value = new MultiOptionsFieldData($selectedOptions);
@@ -163,16 +172,9 @@ trait FieldTrait
             $selectedValue = reset($selectedValues);
             $index = array_search($selectedValue, $optionValues, true);
             $valid = $index !== false;
-            if($valid)
-            {
-                $current = $options[$index];
-                $value = new SingleOptionFieldData($current->label, $current->value, $current->extras, true, $valid);
-            }
-            else
-            {
-                $value = new SingleOptionFieldData(null, null, [], true, true);
-            }
-
+            $label = $valid ? $optionLabels[$index] : null;
+            $extras = $valid ? $optionExtras[$index] : null;
+            $value = new SingleOptionFieldData($label, $selectedValue, $extras, true, $valid);
         }
         else
         {
@@ -182,6 +184,20 @@ trait FieldTrait
         $value->setOptions($options);
         return $value;
 
+    }
+
+    /**
+     * Check if given option should be marked as selected.
+     *
+     * @param array $option
+     * @param mixed $value
+     * @param array $selectedValues
+     * @param bool $selectedBlankOption
+     * @return bool
+     */
+    protected function isOptionSelected(array $option, mixed $value, array &$selectedValues, bool &$selectedBlankOption): bool
+    {
+        return in_array($option['value'], $selectedValues, true);
     }
 
     public function serializeValue($value, ElementInterface $element = null): mixed

@@ -5,6 +5,7 @@ use Craft;
 use craft\fields\BaseOptionsField;
 use craft\base\SortableFieldInterface;
 use craft\base\ElementInterface;
+use craft\helpers\Cp;
 
 use amici\SuperDynamicFields\base\FieldTrait;
 use amici\SuperDynamicFields\fields\data\SingleOptionFieldData;
@@ -16,6 +17,7 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
     use FieldTrait;
 
     public bool $multi = false;
+    // private string $inputTemplate = "_dropdown";
     private string $inputTemplate = "dropdown";
     protected bool $optgroups = true;
 
@@ -36,7 +38,7 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
         }
 
         /** @var SingleOptionFieldData $value */
-        $options = $this->translatedOptions();
+        $options = $this->translatedOptions(true, $value, $element);
 
         /** @var SingleOptionFieldData $value */
         if (! $value->valid) {
@@ -49,12 +51,36 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
         $nameSpacedId   = $view->namespaceInputId($id);
 
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
-        return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
+
+        $encValue = $this->encodeValue($value);
+        if ($encValue === null || $encValue === '') {
+            $encValue = '__BLANK__';
+        }
+
+        /* return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
             'id'          => $id,
             'describedBy' => $this->describedBy,
             'name'        => $this->handle,
             'value'       => $value,
             'options'     => $options,
+            'genError'    => $this->genError,
+            'template'    => $this->templateData
+        ]); */
+
+        /* return Cp::selectizeHtml([
+            'id' => $this->getInputId(),
+            'describedBy' => $this->describedBy,
+            'name' => $this->handle,
+            'value' => $encValue,
+            'options' => $options,
+        ]); */
+
+        return Cp::renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
+            'id' => $this->getInputId(),
+            'describedBy' => $this->describedBy,
+            'name' => $this->handle,
+            'value' => $encValue,
+            'options' => $options,
             'genError'    => $this->genError,
             'template'    => $this->templateData
         ]);

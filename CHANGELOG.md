@@ -4,7 +4,8 @@
 > {warning} We have removed `current` variable from json template that will break after upgrade for sites which uses `current` variable in their json templates.
 
 - Solved a bug where new entry was throwing 500 internal server error due to infinite loading element.
-- Removed existing `current` variable in dynamic loaded sdf json templates. 
+- Changed Dropdown UI so we can search and pick dropdown values just like native craft 4 dropdown field.
+- Removed existing `current` variable in dynamic loaded sdf json templates.
 - Added new `element` variable in dynamic loaded sdf json templates that returns element directly. so we can now use `element` instead `current.element`.
 ```
 {% set entry = element ?? null %}
