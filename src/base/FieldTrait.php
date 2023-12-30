@@ -214,6 +214,32 @@ trait FieldTrait
         return parent::serializeValue($value, $element);
     }
 
+    /**
+     * Base64-encodes a value.
+     *
+     * @param OptionData|MultiOptionsFieldData|string|null $value
+     * @return string|array|null
+     * @since 4.0.6
+     */
+    protected function encodeSdfValue(OptionData|MultiOptionsFieldData|string|null $value): string|array|null
+    {
+        if ($value instanceof MultiOptionsFieldData) {
+            /** @var OptionData[] $options */
+            $options = (array)$value;
+            return array_map(fn(OptionData $value) => $this->encodeValue($value), $options);
+        }
+
+        if ($value instanceof OptionData) {
+            $value = $value->value;
+        }
+
+        if ($value === null || $value === '') {
+            return $value;
+        }
+
+        return sprintf('base64:%s', base64_encode($value));
+    }
+
     public function isValueEmpty($value, ElementInterface $element = null): bool
     {
         /** @var MultiOptionsFieldData|SingleOptionFieldData $value */

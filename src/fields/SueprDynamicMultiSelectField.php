@@ -6,6 +6,7 @@ use craft\base\SortableFieldInterface;
 use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\helpers\ArrayHelper;
+use craft\helpers\Cp;
 
 use amici\SuperDynamicFields\base\FieldTrait;
 use amici\SuperDynamicFields\fields\data\MultiOptionsFieldData;
@@ -47,20 +48,70 @@ class SueprDynamicMultiSelectField extends BaseOptionsField
         }
 
         $view           = Craft::$app->getView();
-        $mode           = $view->getTemplateMode();
-        $id             = $view->formatInputId($this->handle);
-        $nameSpacedId   = $view->namespaceInputId($id);
-
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
-        return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
+
+        // $id             = $view->formatInputId($this->handle);
+        /* return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
             'id'        => $id,
             'name'      => $this->handle,
             'options'   => $this->translatedOptions(),
             'values'     => $value,
             'genError'  => $this->genError,
             'template'  => $this->templateData,
+        ]); */
+
+        return Cp::renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
+            'id'        => $this->getInputId(),
+            'describedBy' => $this->describedBy,
+            'class' => 'selectize',
+            'name'      => $this->handle,
+            'options'   => $this->translatedOptions(true, $value, $element),
+            'values'    => $this->encodeSdfValue($value),
+            'multi' => true,
+            'genError'  => $this->genError,
+            'template'  => $this->templateData,
         ]);
 
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getStaticHtml(mixed $value, ?ElementInterface $element = null): string
+    {
+        if($this->templateData == "" || ! $this->cachedOptions) {
+            $this->json = $this->_parseTemplateJson($element);
+        }
+
+        /** @var MultiOptionsFieldData $value */
+        if (ArrayHelper::contains($value, 'valid', false, true)) {
+            Craft::$app->getView()->setInitialDeltaValue($this->handle, null);
+        }
+
+        $view           = Craft::$app->getView();
+        $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
+
+        // $id             = $view->formatInputId($this->handle);
+        /* return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
+            'id'        => $id,
+            'name'      => $this->handle,
+            'options'   => $this->translatedOptions(),
+            'values'     => $value,
+            'genError'  => $this->genError,
+            'template'  => $this->templateData,
+        ]); */
+
+        return Cp::renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
+            'id'        => $this->getInputId(),
+            'describedBy' => $this->describedBy,
+            'class' => 'selectize',
+            'name'      => $this->handle,
+            'options'   => $this->translatedOptions(true, $value, $element),
+            'values'    => $this->encodeSdfValue($value),
+            'multi' => true,
+            'genError'  => $this->genError,
+            'template'  => $this->templateData,
+        ]);
     }
 
 }
