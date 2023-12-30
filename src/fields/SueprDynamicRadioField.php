@@ -30,7 +30,9 @@ class SueprDynamicRadioField extends BaseOptionsField implements SortableFieldIn
 
     protected function inputHtml(mixed $value, ElementInterface $element = null): string
     {
-        $this->element = $element;
+        if($this->templateData == "" || ! $this->cachedOptions) {
+            $this->json = $this->_parseTemplateJson($element);
+        }
 
         /** @var SingleOptionFieldData $value */
         if (! $value->valid) {
@@ -43,7 +45,6 @@ class SueprDynamicRadioField extends BaseOptionsField implements SortableFieldIn
         $nameSpacedId   = $view->namespaceInputId($id);
 
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
-
         return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
             'id'        => $id,
             'name'      => $this->handle,

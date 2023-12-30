@@ -31,7 +31,9 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
 
     protected function inputHtml(mixed $value, ?ElementInterface $element = null): string
     {
-        $this->element = $element;
+        if($this->templateData == "" || ! $this->cachedOptions) {
+            $this->json = $this->_parseTemplateJson($element);
+        }
 
         /** @var SingleOptionFieldData $value */
         $options = $this->translatedOptions();
@@ -47,7 +49,6 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
         $nameSpacedId   = $view->namespaceInputId($id);
 
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
-
         return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
             'id'          => $id,
             'describedBy' => $this->describedBy,

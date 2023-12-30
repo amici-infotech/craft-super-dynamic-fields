@@ -37,7 +37,9 @@ class SueprDynamicCheckboxesField extends BaseOptionsField
 
     protected function inputHtml(mixed $value, ElementInterface $element = null): string
     {
-        $this->element = $element;
+        if($this->templateData == "" || ! $this->cachedOptions) {
+            $this->json = $this->_parseTemplateJson($element);
+        }
 
         /** @var MultiOptionsFieldData $value */
         if (ArrayHelper::contains($value, 'valid', false, true)) {

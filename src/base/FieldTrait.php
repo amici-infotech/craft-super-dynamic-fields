@@ -93,10 +93,12 @@ trait FieldTrait
 
     public function normalizeValue($value, ElementInterface $element = null): mixed
     {
-        $this->element = $element;
-
         if ($value instanceof SingleOptionFieldData || $value instanceof MultiOptionsFieldData) {
             return $value;
+        }
+
+        if($this->templateData == "" || ! $this->cachedOptions) {
+            $this->json = $this->_parseTemplateJson($element);
         }
 
         if (is_string($value) && (
@@ -118,6 +120,7 @@ trait FieldTrait
         $options = [];
         $optionValues = [];
         $optionLabels = [];
+
         foreach ($this->options() as $option) {
             if (! isset($option['optgroup'])) {
                 $selected = in_array($option['value'], $selectedValues, true);
@@ -183,8 +186,6 @@ trait FieldTrait
 
     public function serializeValue($value, ElementInterface $element = null): mixed
     {
-        $this->element = $element;
-
         if ($value instanceof MultiOptionsFieldData) {
             $serialized = [];
             foreach ($value as $selectedValue) {
@@ -197,10 +198,8 @@ trait FieldTrait
         return parent::serializeValue($value, $element);
     }
 
-    public function isValueEmpty($value, ElementInterface $element): bool
+    public function isValueEmpty($value, ElementInterface $element = null): bool
     {
-        $this->element = $element;
-
         /** @var MultiOptionsFieldData|SingleOptionFieldData $value */
         if ($value instanceof SingleOptionFieldData) {
             return $value->value === null || $value->value === '';
@@ -213,10 +212,10 @@ trait FieldTrait
     {
 
         $this->options = [];
-        if($this->templateData == "" || ! $this->cachedOptions)
+        /* if($this->templateData == "" || ! $this->cachedOptions)
         {
             $this->json = $this->_parseTemplateJson();
-        }
+        } */
 
         if(is_array($this->json))
         {
@@ -250,13 +249,14 @@ trait FieldTrait
         ];
     }
 
-    private function _parseTemplateJson(): mixed
+    private function _parseTemplateJson(ElementInterface $element = null): mixed
     {
-
         $view       = Craft::$app->getView();
         $path       = $view->getTemplatesPath();
+
         $variables  = [
-            'current' => $this
+            // 'current' => $this
+            'element' => $element
         ];
         $json       = false;
 
@@ -290,7 +290,6 @@ trait FieldTrait
         }
 
         return $json;
-
     }
 
     public function getElementConditionRuleType(): array|string|null
