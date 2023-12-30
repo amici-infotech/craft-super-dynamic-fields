@@ -5,7 +5,9 @@
 
 - Solved a bug where new entry was throwing 500 internal server error due to infinite loading element.
 - Changed Dropdown UI so we can search and pick dropdown values just like native craft 4 dropdown field.
+- Changed Multi-Select Buttons Group UI so we can search and pick values just like native craft 4 dropdown field.
 - Changed Radio Buttons Group UI.
+- Changed Checkboxes Buttons Group UI.
 - Removed existing `current` variable in dynamic loaded sdf json templates.
 - Added new `element` variable in dynamic loaded sdf json templates that returns element directly. so we can now use `element` instead `current.element`.
 ```
