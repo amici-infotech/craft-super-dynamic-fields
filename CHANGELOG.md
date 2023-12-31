@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.8 - 2023-12-30
+> {warning} We have removed `current` variable from json template that will break after upgrade for sites which uses `current` variable in their json templates.
+- Solved a bug where new entry was throwing 500 internal server error due to infinite loading element.
+- Removed existing `current` variable in dynamic loaded sdf json templates.
+- Added new `element` variable in dynamic loaded sdf json templates that returns element directly. so we can now use `element` instead `current.element`.
+```
+{% set entry = element ?? null %}
+{% set matrixField = entry.matrixField.all() ?? null %}
+[
+    { "label" : "-- Select -- ", "value": "" }
+    {% for item in matrixField %}
+    ,{ "label" : "{{ item.heading }}", "value": "{{ item.getId() }}" }
+    {% endfor %}
+]
+```
+
 ## 1.0.7.4 - 2023-06-14
 - Fixed a bug with rendering as include template instead of full page template.
 
