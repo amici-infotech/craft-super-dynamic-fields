@@ -35,11 +35,13 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
             $this->json = $this->_parseTemplateJson($element);
         }
 
+        $view = Craft::$app->getView();
+
         /** @var SingleOptionFieldData $value */
         $options = $this->translatedOptions(true);
 
         if (! $value->valid) {
-            Craft::$app->getView()->setInitialDeltaValue($this->handle, $this->encodeValue($value->value));
+            $view->setInitialDeltaValue($this->handle, $this->encodeValue($value->value));
             $value = null;
 
             // Add a blank option to the beginning if one doesn't already exist
@@ -50,7 +52,6 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
             }
         }
 
-        $view = Craft::$app->getView();
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
 
         return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [

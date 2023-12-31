@@ -228,6 +228,25 @@ trait FieldTrait
 
     }
 
+    protected function encodeValue($value)
+    {
+        if ($value instanceof MultiOptionsFieldData) {
+            return array_map(function(OptionData $value) {
+                return $this->encodeValue($value);
+            }, (array)$value);
+        }
+
+        if ($value instanceof OptionData) {
+            $value = $value->value;
+        }
+
+        if ($value === null || $value === '') {
+            return $value;
+        }
+
+        return sprintf('base64:%s', base64_encode($value));
+    }
+
     public function getContentGqlType()
     {
         return [

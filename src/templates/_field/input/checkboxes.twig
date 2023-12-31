@@ -1,34 +1,34 @@
-{% set options = options ?? [] %}
-{% set values = values ?? [] %}
-{% set optionName = (name ?? false) ? "#{name}[]" : null %}
+{%- set options = options ?? [] %}
+{%- set values = values ?? [] %}
+{%- set optionName = (name ?? false) ? "#{name}[]" : null %}
 
 {% set fieldsetAttributes = {
     class: ['checkbox-group'],
 } %}
 
 {% if block('attr') is defined %}
-    {% set fieldsetAttributes = fieldsetAttributes|merge(('<div ' ~ block('attr') ~ '>')|parseAttr, recursive=true) %}
+    {%- set fieldsetAttributes = fieldsetAttributes|merge(('<div ' ~ block('attr') ~ '>')|parseAttr, recursive=true) %}
 {% endif %}
 
-<fieldset {{ attr(fieldsetAttributes) }}>
+{% tag 'fieldset' with fieldsetAttributes %}
     {% if name ?? false %}
         {{ hiddenInput(name, '') }}
-    {% endif %}
+    {% endif -%}
 
-    {% for key, option in options %}
-        {% if option is not iterable %}
-            {% set option = {label: option, value: key} %}
-        {% endif %}
+    {%- for key, option in options %}
+        {%- if option is not iterable %}
+            {%- set option = {label: option, value: key} %}
+        {%- endif %}
         <div>
-            {% include "super-dynamic-fields/_field/input/inner/_checkbox" with {
-                id: loop.first ? (id ?? null) : null,
+            {% include "_includes/forms/checkbox" with {
+                describedBy: describedBy ?? false,
                 name: optionName,
                 checked: (option.value is defined and option.value in values),
                 autofocus: loop.first and (autofocus ?? false) and not craft.app.request.isMobileBrowser(true)
             }|merge(option) only %}
         </div>
-    {% endfor %}
-</fieldset>
+    {%- endfor %}
+{% endtag %}
 
 {% if genError|length %}
 	<div class="sdf-al-box border-box error matrixconfigitem text">
