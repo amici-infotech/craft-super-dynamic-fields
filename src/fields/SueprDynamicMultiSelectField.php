@@ -41,26 +41,21 @@ class SueprDynamicMultiSelectField extends BaseOptionsField
             $this->json = $this->_parseTemplateJson($element);
         }
 
+        $view = Craft::$app->getView();
+
         /** @var MultiOptionsFieldData $value */
         if (ArrayHelper::contains($value, 'valid', false, true)) {
-            Craft::$app->getView()->setInitialDeltaValue($this->handle, null);
+            $view->setInitialDeltaValue($this->handle, null);
         }
 
-        $view           = Craft::$app->getView();
-        $mode           = $view->getTemplateMode();
-        $id             = $view->formatInputId($this->handle);
-        $nameSpacedId   = $view->namespaceInputId($id);
-
-        $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
         return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
-            'id'        => $id,
-            'name'      => $this->handle,
-            'options'   => $this->translatedOptions(),
-            'values'     => $value,
+            'id' => $this->getInputId(),
+            'describedBy' => $this->describedBy,
+            'name' => $this->handle,
+            'values' => $this->encodeValue($value),
+            'options' => $this->translatedOptions(true),
             'genError'  => $this->genError,
             'template'  => $this->templateData,
         ]);
-
     }
-
 }
