@@ -3,10 +3,10 @@ namespace amici\SuperDynamicFields\base;
 
 use Craft;
 use yii\db\Schema;
-use craft\helpers\Db;
 
 use craft\base\ElementInterface;
 use craft\helpers\Json;
+use craft\helpers\StringHelper;
 
 use amici\SuperDynamicFields\fields\data\OptionData;
 use amici\SuperDynamicFields\fields\data\SingleOptionFieldData;
@@ -95,24 +95,30 @@ trait FieldTrait
         }
 
         if (is_string($value) && (
-                $value === '' ||
-                strpos($value, '[') === 0 ||
-                strpos($value, '{') === 0
-            )) {
+            strpos($value, '[') === 0 ||
+            strpos($value, '{') === 0
+        )) {
             $value = Json::decodeIfJson($value);
-        } else if ($value === null && $this->isFresh($element)) {
+        } elseif ($value === '' && $this->multi) {
+            $value = [];
+        } elseif ($value === null && $this->isFresh($element)) {
             $value = $this->defaultValue();
         }
 
         // Normalize to an array of strings
         $selectedValues = [];
         foreach ((array)$value as $val) {
+            $val = (string)$val;
+            if (StringHelper::startsWith($val, 'base64:')) {
+                $val = base64_decode(StringHelper::removeLeft($val, 'base64:'));
+            }
             $selectedValues[] = $val;
         }
 
         $options = [];
         $optionValues = [];
         $optionLabels = [];
+        $optionExtras = [];
         foreach ($this->options() as $option) {
             if (! isset($option['optgroup'])) {
                 $selected = in_array($option['value'], $selectedValues, true);
@@ -125,6 +131,7 @@ trait FieldTrait
                 $options[] = new OptionData($option['label'], $option['value'], $extras, $selected, true);
                 $optionValues[] = (string)$option['value'];
                 $optionLabels[] = (string)$option['label'];
+                $optionExtras[] = $extras;
             }
         }
 
@@ -137,11 +144,9 @@ trait FieldTrait
             {
                 $index = array_search($selectedValue, $optionValues, true);
                 $valid = $index !== false;
-                if($valid)
-                {
-                    $current = $options[$index];
-                    $selectedOptions[] = new OptionData($current->label, $current->value, $current->extras, true, $valid);
-                }
+                $label = $valid ? $optionLabels[$index] : null;
+                $extras = $valid ? $optionExtras[$index] : [];
+                $selectedOptions[] = new OptionData($label, $selectedValue, $extras, true, $valid);
             }
 
             $value = new MultiOptionsFieldData($selectedOptions);
@@ -155,16 +160,9 @@ trait FieldTrait
             $selectedValue = reset($selectedValues);
             $index = array_search($selectedValue, $optionValues, true);
             $valid = $index !== false;
-            if($valid)
-            {
-                $current = $options[$index];
-                $value = new SingleOptionFieldData($current->label, $current->value, $current->extras, true, $valid);
-            }
-            else
-            {
-                $value = new SingleOptionFieldData(null, null, [], true, true);
-            }
-
+            $label = $valid ? $optionLabels[$index] : null;
+            $extras = $valid ? $optionExtras[$index] : [];
+            $value = new SingleOptionFieldData($label, $selectedValue, $extras, true, $valid);
         }
         else
         {

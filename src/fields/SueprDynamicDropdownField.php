@@ -2,9 +2,10 @@
 namespace amici\SuperDynamicFields\fields;
 
 use Craft;
-use craft\fields\BaseOptionsField;
 use craft\base\SortableFieldInterface;
 use craft\base\ElementInterface;
+use craft\helpers\ArrayHelper;
+use craft\fields\BaseOptionsField;
 
 use amici\SuperDynamicFields\base\FieldTrait;
 use amici\SuperDynamicFields\fields\data\SingleOptionFieldData;
@@ -35,25 +36,31 @@ class SueprDynamicDropdownField extends BaseOptionsField implements SortableFiel
         }
 
         /** @var SingleOptionFieldData $value */
+        $options = $this->translatedOptions(true);
+
         if (! $value->valid) {
-            Craft::$app->getView()->setInitialDeltaValue($this->handle, null);
+            Craft::$app->getView()->setInitialDeltaValue($this->handle, $this->encodeValue($value->value));
+            $value = null;
+
+            // Add a blank option to the beginning if one doesn't already exist
+            if (!ArrayHelper::contains($options, function($option) {
+                return isset($option['value']) && $option['value'] === '';
+            })) {
+                array_unshift($options, ['label' => '', 'value' => '']);
+            }
         }
 
-        $view           = Craft::$app->getView();
-        $mode           = $view->getTemplateMode();
-        $id             = $view->formatInputId($this->handle);
-        $nameSpacedId   = $view->namespaceInputId($id);
-
+        $view = Craft::$app->getView();
         $view->registerAssetBundle(SuperDynamicFieldsAsset::class);
 
         return $view->renderTemplate('super-dynamic-fields/_field/input/' . $this->inputTemplate, [
-            'id'        => $id,
-            'name'      => $this->handle,
-            'options'   => $this->translatedOptions(),
-            'value'     => $value,
+            'id' => $this->getInputId(),
+            'describedBy' => $this->describedBy,
+            'name' => $this->handle,
+            'value' => $this->encodeValue($value),
+            'options' => $options,
             'genError'  => $this->genError,
             'template'  => $this->templateData
         ]);
-
     }
 }
