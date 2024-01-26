@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.1.1 - 2024-01-26
+- Solved a bug where setting Multi select field (or Checkboxes) in Entries table in backend was throwing error.
+
 ## 2.0.1 - 2023-12-30
 > {warning} We have removed `current` variable from json template that will break after upgrade for sites which uses `current` variable in their json templates.
 

@@ -243,7 +243,7 @@ trait FieldTrait
     public function isValueEmpty($value, ElementInterface $element = null): bool
     {
         /** @var MultiOptionsFieldData|SingleOptionFieldData $value */
-        if ($value instanceof SingleOptionFieldData) {
+        if ($value instanceof SingleOptionFieldData || $value instanceof OptionData) {
             return $value->value === null || $value->value === '';
         }
 
