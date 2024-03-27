@@ -16,26 +16,20 @@ class SueprDynamicCheckboxesField extends BaseOptionsField
 
     use FieldTrait;
 
-    public bool $multi = true;
+    protected static bool $multi = true;
     private string $inputTemplate = "checkboxes";
-
-    public function init(): void
-    {
-        parent::init();
-        $this->multi = true;
-    }
 
     public static function displayName(): string
     {
         return Craft::t('super-dynamic-fields', 'Checkboxes [Super Dynamic Fields]');
     }
 
-    public static function valueType(): string
+    public static function phpType(): string
     {
         return MultiOptionsFieldData::class;
     }
 
-    protected function inputHtml(mixed $value, ElementInterface $element = null): string
+    protected function inputHtml(mixed $value, ElementInterface $element = null, bool $inline = false): string
     {
         if($this->templateData == "" || ! $this->cachedOptions) {
             $this->json = $this->_parseTemplateJson($element);

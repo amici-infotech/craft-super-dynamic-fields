@@ -43,7 +43,7 @@ trait FieldTrait
 
     public function getContentColumnType(): string
     {
-        if ($this->multi) {
+        if (static::$multi) {
             return Schema::TYPE_TEXT;
 
             /*// See how much data we could possibly be saving if everything was selected.
@@ -92,7 +92,7 @@ trait FieldTrait
         // Removed range validation for options as template data may vary per element group
     }
 
-    public function normalizeValue($value, ElementInterface $element = null): mixed
+    public function normalizeValue($value, ?ElementInterface $element = null): mixed
     {
         if ($value instanceof SingleOptionFieldData || $value instanceof MultiOptionsFieldData) {
             return $value;
@@ -107,9 +107,9 @@ trait FieldTrait
             str_starts_with($value, '{')
         )) {
             $value = Json::decodeIfJson($value);
-        } elseif ($value === '' && $this->multi) {
+        } elseif ($value === '' && static::$multi) {
             $value = [];
-        } elseif ($value === '__BLANK__') {
+        } elseif (is_string($value) && strtolower($value) === '__blank__') {
             $value = '';
         } elseif ($value === null && $this->isFresh($element)) {
             $value = $this->defaultValue();
@@ -147,7 +147,7 @@ trait FieldTrait
             }
         }
 
-        if ($this->multi)
+        if (static::$multi)
         {
 
             // Convert the value to a MultiOptionsFieldData object
@@ -285,7 +285,7 @@ trait FieldTrait
     {
         return [
             'name' => $this->handle,
-            'type' => $this->multi ? Type::listOf(Type::string()) : Type::string(),
+            'type' => static::$multi ? Type::listOf(Type::string()) : Type::string(),
             'args' => OptionFieldArguments::getArguments(),
             'resolve' => OptionFieldResolver::class . '::resolve',
         ];

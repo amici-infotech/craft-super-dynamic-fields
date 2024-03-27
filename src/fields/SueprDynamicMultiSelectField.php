@@ -17,26 +17,20 @@ class SueprDynamicMultiSelectField extends BaseOptionsField
 
     use FieldTrait;
 
-    public bool $multi = true;
+    protected static bool $multi = true;
     private string $inputTemplate = "multiselect";
-
-    public function init(): void
-    {
-        parent::init();
-        $this->multi = true;
-    }
 
     public static function displayName(): string
     {
         return Craft::t('super-dynamic-fields', 'Multi-select [Super Dynamic Fields]');
     }
 
-    public static function valueType(): string
+    public static function phpType(): string
     {
         return MultiOptionsFieldData::class;
     }
 
-    protected function inputHtml(mixed $value, ElementInterface $element = null): string
+    protected function inputHtml(mixed $value, ElementInterface $element = null, bool $inline = false): string
     {
         if($this->templateData == "" || ! $this->cachedOptions) {
             $this->json = $this->_parseTemplateJson($element);
@@ -77,7 +71,7 @@ class SueprDynamicMultiSelectField extends BaseOptionsField
     /**
      * @inheritdoc
      */
-    public function getStaticHtml(mixed $value, ?ElementInterface $element = null): string
+    public function getStaticHtml(mixed $value, \craft\base\ElementInterface $element = null): string
     {
         if($this->templateData == "" || ! $this->cachedOptions) {
             $this->json = $this->_parseTemplateJson($element);

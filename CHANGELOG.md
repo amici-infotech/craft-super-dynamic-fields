@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.0 - 2024-03-27
+- Upgraded plugin to supports Craft 5.
+- Minimum PHP version supported is php 8.2
+
 ## 2.0.1.1 - 2024-01-26
 - Solved a bug where setting Multi select field (or Checkboxes) in Entries table in backend was throwing error.
 
